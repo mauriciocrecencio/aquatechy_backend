@@ -2,11 +2,10 @@ import { app } from './app'
 import { env } from './env'
 
 const port = env.PORT
-const host = '0.0.0.0'
+const host = env.HOST
 
 app
   .listen({
-    host,
     port,
   })
   .then(() => {
