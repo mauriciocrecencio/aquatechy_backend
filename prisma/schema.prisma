@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String   @unique
+  avatar        String?
+  // Deveria ser unico, porém, está dificil fazer isso com Mongo
+  phone         String?
+  password      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  refreshTokens String[]
+  clients       Client[]
+}
+
+model Client {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userOwner     User      @relation(fields: [userOwnerId], references: [id])
+  userOwnerId   String    @db.ObjectId
+  isActive      Boolean?  @default(true)
+  name          String
+  address       String
+  zip           String
+  state         String
+  city          String
+  phone1        String    @unique
+  // Deveria ser unico, porém, está dificil fazer isso com Mongo
+  phone2        String?
+  email1        String    @unique
+  // Deveria ser unico, porém, está dificil fazer isso com Mongo
+  email2        String?
+  pools         Pool[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
+}
+
+model Pool {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  isActive      Boolean?  @default(true)
+  name          String
+  address       String
+  zip           String
+  city          String
+  state         String
+  animalDanger  Boolean?  @default(false)
+  lockerCode    String?
+  poolType      PoolType
+  enterSide     String
+  photos        String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  userOwnerId   String    @db.ObjectId
+  clientOwner   Client    @relation(fields: [clientOwnerId], references: [id])
+  clientOwnerId String    @db.ObjectId
+  services      Service[]
+}
+
+model Service {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  poolId         String   @db.ObjectId
+  doneByUser     String   @db.ObjectId
+  photo          String[]
+  chlorine       Float
+  ph             Float
+  alkalinity     Float
+  cyanAcid       Float
+  chlorineSpent  Float
+  tabletSpent    Float
+  shockSpent     Float
+  phosphateSpent Float
+  pool           Pool     @relation(fields: [poolId], references: [id])
+  createdAt      DateTime @default(now())
+}
+
+enum PoolType {
+  CHLORINE
+  SALT
+  OTHER
+}
+
+// id            String   @id @default(auto()) @map("_id") @db.ObjectId
+// isActive      Boolean
+// // userOwner
+// // clientOwner
+// address       String
+// zip           String
+// city          String
+// state         String
+// animalDanger  Boolean
+// lockerCode    String
+// poolType      String
+// enterSide     String
+// // assignments
+// createdAt     DateTime @default(now())
+// updatedAt     DateTime @updatedAt
+// deactivatedAt DateTime

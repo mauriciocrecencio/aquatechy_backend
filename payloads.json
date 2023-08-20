@@ -1,0 +1,26 @@
+{"client":{
+  "userOwnerId": "64d6aaad9834530fb2a2343d",
+ "isActive":true,
+ "name":"Client teste",
+ "address":"Rua teste",
+ "zip":"cep teste",
+ "state":"estado teste",
+ "city":"cidade teste",
+ "phone1":"celular teste",
+ "email1":"email@teste.com"
+ },
+
+ "pool":{
+"name": "pool teste",
+"address": "rua pool",
+"zip": "1203o",
+"city": "ksadk",
+"state": "asd",
+"animalDanger": true,
+"lockerCode": "123123",
+"poolType": "CHLORINE",
+"enterSide": "north",
+"photos": ["asd", "dsa"],
+"userOwnerId": "64d818ace642ee1942976b80",
+"clientOwnerId": "64d818cbe642ee1942976b81"
+ }}

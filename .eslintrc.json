@@ -1,0 +1,10 @@
+{
+  "plugins": ["simple-import-sort"],
+  "extends": [
+    "@rocketseat/eslint-config/node"
+  ],
+  "ignorePatterns": ["build/*.js"],
+  "rules": {
+    "simple-import-sort/imports": "error"
+  }
+}
